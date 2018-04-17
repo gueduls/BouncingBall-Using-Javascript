@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Bouncing Ball</title>
+<style type="text/css">
+    .button {
+    background-color: firebrick;
+    border: none;
+    color: black;
+    font-family: fantasy;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+        border-radius:50%;
+        background-color: cornflowerblue;
+}
+#myCanvas {
+    align-content: center;
+   clear: both;
+   border-collapse: collapse;
+   border: 3px solid black;
+    background-color: black;
+    
+}
+h1{
+    font-family: fantasy;
+    text-align: center;
+    background-color: cornflowerblue;
+    }
+    table{
+       padding-left: 34%; 
+    }
+</style>
+</head>
+<body>
+
+<h1>Bouncing a Ball Around with HTML5 and JavaScript </h1>
+<div id="container" >
+   <table>
+      <tr>
+         <td colspan="2" >
+            <canvas id="myCanvas" width="400" height="400"></canvas>
+         </td>
+      </tr>
+      <tr align="center">
+         <td><input type="button" value="Start" onclick="fnstrtBtn()" class="button"></td>
+         <td><input type="button" value="Stop" onclick="fnstopBtn()" class="button"></td>
+      </tr>
+   </table>
+</div>
+
+<script type="text/javascript">
+   var context;
+   var dx = -2;
+   var dy = -2;
+   var y = 250;
+   var x = 100;
+
+   var intervalTime = 10
+   var togglenumber = 1;
+   var colorCode = "#ffffff";
+
+   var boolStop = false;
+
+   // Call the function draw
+   // every #intervalTime ms
+   var setIntr = setInterval(draw, intervalTime);
+
+   // Start btn functioanlity
+   function fnstrtBtn() {
+      console.log("fnstrtBtn:");
+      if (boolStop) {
+         setIntr = setInterval(draw, intervalTime);
+         boolStop = false;
+          colorCode= "#00ffff";
+      }
+       else
+           colorCode ="#000000";
+   }
+
+   // Stop btn functioanlity
+   function fnstopBtn() {
+      console.log("fnstopBtn:");
+      clearInterval(setIntr);
+      boolStop = true;
+   }
+
+   // Drawing the circle functioanlity
+   function draw() {
+      context= myCanvas.getContext('2d');
+      // To erase the old cirlces
+      context.clearRect(0,0,400,400);
+      context.beginPath();
+      context.fillStyle= colorCode;
+   
+      // Draws a circle of radius 20 at the 
+      // coordinates (x,y) on the canvas
+      context.arc(x,y,20,0,Math.PI*2,true);
+      context.closePath();
+      context.fill();
+   
+      // Boundary Logic
+      if ( x<0 || x>400){
+         dx=-dx;
+          colorCode = "#6495ed";
+      }
+         if ( y<0 || y>400){
+         dy=-dy;
+          colorCode = "#fa8072";
+      }
+      x+=dx;
+      y+=dy;
+   }
+</script>
+</body>
+</html>
